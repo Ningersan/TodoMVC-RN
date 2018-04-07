@@ -27,23 +27,10 @@ const styles = StyleSheet.create({
     textBox: {
         paddingLeft: 15,
         height: 65,
+        fontSize: 20,
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: '#ededed',
     },
 })
-
-// class TypeNew extends Component {
-//     render() {
-//         const { value, onSaveText, onAddTodo, placeholder } = this.props
-//         return (
-//             <TextInput
-//                 placeholder={placeholder}
-//                 value={value}
-//                 onChangeText={onSaveText}
-//                 onSubmitEditing={onAddTodo}
-//             />
-//         )
-//     }
-// }
 
 export default TypeNew

@@ -1,16 +1,32 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import Swipeout from 'react-native-swipeout'
 import Checkbox from './Checkbox'
 
 class TodoItem extends Component {
     render() {
-        const { todo } = this.props
+        const { todo, onToggle, onDelete } = this.props
         const viewDisabledStyling = todo.complete ? { opacity: 0.5 } : {}
+        const labelCompletedStyling = todo.complete
+            ? { textDecorationLine: 'line-through' }
+            : {}
+        // Buttons
+        const swipeoutBtns = [
+            { text: 'delete', backgroundColor: 'red', onPress: onDelete },
+        ]
         return (
-            <View style={[styles.item, viewDisabledStyling]}>
-                <Checkbox isChecked={todo.complete} />
-                <Text style={styles.label}>{todo.text}</Text>
-            </View>
+            <Swipeout right={swipeoutBtns} backgroundColor={'transparent'}>
+                <TouchableOpacity
+                    underlayColor="transparent"
+                    onPress={onToggle}>
+                    <View style={[styles.item, viewDisabledStyling]}>
+                        <Checkbox isChecked={todo.complete} />
+                        <Text style={[styles.label, labelCompletedStyling]}>
+                            {todo.text}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            </Swipeout>
         )
     }
 }
