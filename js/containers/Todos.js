@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    TextInput,
-    ScrollView,
-    FlatList,
-    StyleSheet,
-    Platform,
-} from 'react-native'
+import { View, Text, TabBarIOS, StyleSheet, Platform } from 'react-native'
 import TypeNew from '../components/TypeNew'
-import TodoList from './TodoList'
+import Navigation from './Navigation'
+import { filter } from '../scripts/utils'
 
 class Todos extends Component {
     constructor(props) {
@@ -17,21 +10,20 @@ class Todos extends Component {
         this.state = {
             text: '',
             todos: [
-                { text: '望不穿这暧昧的眼', complete: false },
-                { text: '终须都归还 无谓多贪', complete: false },
-                { text: '偏未晚', complete: true },
-                { text: '望不穿这暧昧的眼', complete: false },
-                { text: '终须都归还 无谓多贪', complete: false },
-                { text: '偏未晚', complete: true },
-                { text: '望不穿这暧昧的眼', complete: false },
-                { text: '终须都归还 无谓多贪', complete: false },
-                { text: '偏未晚', complete: true },
+                { text: '望不穿这暧昧的眼', isCompleted: false },
+                { text: '终须都归还 无谓多贪', isCompleted: false },
+                { text: '偏未晚', isCompleted: true },
+                { text: '望不穿这暧昧的眼', isCompleted: false },
+                { text: '终须都归还 无谓多贪', isCompleted: false },
+                { text: '偏未晚', isCompleted: true },
             ],
+            visibility: 'all',
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleAddTodo = this.handleAddTodo.bind(this)
         this.handleDelTodo = this.handleDelTodo.bind(this)
         this.handleToggle = this.handleToggle.bind(this)
+        this.handleSetVisibility = this.handleSetVisibility.bind(this)
     }
 
     handleChange(text) {
@@ -46,7 +38,7 @@ class Todos extends Component {
                 return {
                     todos: todos.concat({
                         text,
-                        complete: false,
+                        isCompleted: false,
                     }),
                     text: '',
                 }
@@ -67,13 +59,24 @@ class Todos extends Component {
             if (index === todoIndex) {
                 return {
                     ...todo,
-                    complete: !todo.complete,
+                    isCompleted: !todo.isComplete,
                 }
             }
             return todo
         })
 
         this.setState({ todos })
+    }
+
+    handleSetVisibility(visibility) {
+        this.setState({
+            visibility,
+        })
+    }
+
+    getTodos() {
+        const { visibility, todos } = this.state
+        return filter[visibility](todos)
     }
 
     render() {
@@ -85,10 +88,11 @@ class Todos extends Component {
                     onSaveText={this.handleChange}
                     onAddTodo={this.handleAddTodo}
                 />
-                <TodoList
-                    todos={todos}
+                <Navigation
+                    todos={this.getTodos()}
                     onDeleteTodo={this.handleDelTodo}
                     onToggleTodo={this.handleToggle}
+                    onSetVisibility={this.handleSetVisibility}
                 />
             </View>
         )
@@ -99,6 +103,7 @@ const styles = StyleSheet.create({
     todoApp: {
         ...Platform.select({
             ios: {
+                flex: 1,
                 marginTop: 20,
             },
         }),

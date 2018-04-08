@@ -6,8 +6,8 @@ import Checkbox from './Checkbox'
 class TodoItem extends Component {
     render() {
         const { todo, onToggle, onDelete } = this.props
-        const viewDisabledStyling = todo.complete ? { opacity: 0.5 } : {}
-        const labelCompletedStyling = todo.complete
+        const viewDisabledStyling = todo.isCompleted ? { opacity: 0.5 } : {}
+        const labelCompletedStyling = todo.isCompleted
             ? { textDecorationLine: 'line-through' }
             : {}
         // Buttons
@@ -15,12 +15,15 @@ class TodoItem extends Component {
             { text: 'delete', backgroundColor: 'red', onPress: onDelete },
         ]
         return (
-            <Swipeout right={swipeoutBtns} backgroundColor={'transparent'}>
+            <Swipeout
+                autoClose
+                right={swipeoutBtns}
+                backgroundColor={'transparent'}>
                 <TouchableOpacity
                     underlayColor="transparent"
                     onPress={onToggle}>
                     <View style={[styles.item, viewDisabledStyling]}>
-                        <Checkbox isChecked={todo.complete} />
+                        <Checkbox isChecked={todo.isCompleted} />
                         <Text style={[styles.label, labelCompletedStyling]}>
                             {todo.text}
                         </Text>
