@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, FlatList, ScrollView, StyleSheet } from 'react-native'
 import TodoItem from '../components/TodoItem'
+import withFilter from '../HOC/withFilter'
 
 const TodoList = ({ todos, onToggleTodo, onDeleteTodo }) => (
     <ScrollView>
@@ -8,10 +9,10 @@ const TodoList = ({ todos, onToggleTodo, onDeleteTodo }) => (
             data={todos}
             renderItem={({ item, index }) => (
                 <TodoItem
-                    key={index}
+                    key={item.id}
                     todo={item}
-                    onToggle={() => onToggleTodo(index)}
-                    onDelete={() => onDeleteTodo(index)}
+                    onToggle={() => onToggleTodo(item.id)}
+                    onDelete={() => onDeleteTodo(item.id)}
                 />
             )}
             keyExtractor={(item, index) => index}
@@ -20,3 +21,8 @@ const TodoList = ({ todos, onToggleTodo, onDeleteTodo }) => (
 )
 
 export default TodoList
+
+// HOC component
+export const AllTodoList = withFilter(TodoItem, 'all')
+export const ActiveTodoList = withFilter(TodoItem, 'active')
+export const CompletedTodoList = withFilter(TodoList, 'completed')

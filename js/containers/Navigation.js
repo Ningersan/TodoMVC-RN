@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TabBarIOS, StyleSheet } from 'react-native'
 import TodoList from './TodoList'
+import { AllTodoList, ActiveTodoList, CompletedTodoList } from './TodoList'
 
 const tabs = [
     {
@@ -20,6 +21,12 @@ const tabs = [
     },
 ]
 
+const filterToComponent = {
+    all: AllTodoList,
+    active: ActiveTodoList,
+    completed: CompletedTodoList,
+}
+
 class Navigation extends Component {
     constructor(props) {
         super(props)
@@ -33,12 +40,13 @@ class Navigation extends Component {
         this.setState({
             selectItem: index,
         })
-        this.props.onSetVisibility(tab.key)
+        // this.props.onSetVisibility(tab.key)
     }
 
     renderTab(tab, index) {
         const { selectItem } = this.state
         const { todos, onDeleteTodo, onToggleTodo } = this.props
+        const FilteredTodo = filterToComponent[tab.key]
         return (
             <TabBarIOS.Item
                 key={tab.key}
@@ -46,7 +54,7 @@ class Navigation extends Component {
                 icon={tab.icon}
                 selected={index === selectItem}
                 onPress={() => this.handleJumpTo(tab, index)}>
-                <TodoList
+                <FilteredTodo
                     todos={todos}
                     onDeleteTodo={onDeleteTodo}
                     onToggleTodo={onToggleTodo}

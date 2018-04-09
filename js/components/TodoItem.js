@@ -10,6 +10,7 @@ class TodoItem extends Component {
         const labelCompletedStyling = todo.isCompleted
             ? { textDecorationLine: 'line-through' }
             : {}
+
         // Buttons
         const swipeoutBtns = [
             { text: 'delete', backgroundColor: 'red', onPress: onDelete },

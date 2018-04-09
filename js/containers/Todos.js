@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, TabBarIOS, StyleSheet, Platform } from 'react-native'
 import TypeNew from '../components/TypeNew'
 import Navigation from './Navigation'
-import { filter } from '../scripts/utils'
+import { filter, guid } from '../scripts/utils'
 
 class Todos extends Component {
     constructor(props) {
@@ -10,12 +10,12 @@ class Todos extends Component {
         this.state = {
             text: '',
             todos: [
-                { text: '望不穿这暧昧的眼', isCompleted: false },
-                { text: '终须都归还 无谓多贪', isCompleted: false },
-                { text: '偏未晚', isCompleted: true },
-                { text: '望不穿这暧昧的眼', isCompleted: false },
-                { text: '终须都归还 无谓多贪', isCompleted: false },
-                { text: '偏未晚', isCompleted: true },
+                { id: guid(), text: '望不穿这暧昧的眼', isCompleted: false },
+                { id: guid(), text: '终须都归还 无谓多贪', isCompleted: false },
+                { id: guid(), text: '偏未晚', isCompleted: true },
+                { id: guid(), text: '望不穿这暧昧的眼', isCompleted: false },
+                { id: guid(), text: '终须都归还 无谓多贪', isCompleted: false },
+                { id: guid(), text: '偏未晚', isCompleted: true },
             ],
             visibility: 'all',
         }
@@ -23,7 +23,7 @@ class Todos extends Component {
         this.handleAddTodo = this.handleAddTodo.bind(this)
         this.handleDelTodo = this.handleDelTodo.bind(this)
         this.handleToggle = this.handleToggle.bind(this)
-        this.handleSetVisibility = this.handleSetVisibility.bind(this)
+        // this.handleSetVisibility = this.handleSetVisibility.bind(this)
     }
 
     handleChange(text) {
@@ -37,6 +37,7 @@ class Todos extends Component {
                 const { todos, text } = prewState
                 return {
                     todos: todos.concat({
+                        id: guid(),
                         text,
                         isCompleted: false,
                     }),
@@ -46,20 +47,18 @@ class Todos extends Component {
         }
     }
 
-    handleDelTodo(index) {
-        const todos = this.state.todos.filter(
-            (todo, todoIndex) => index !== todoIndex
-        )
+    handleDelTodo(id) {
+        const todos = this.state.todos.filter(todo => id !== todo.id)
 
         this.setState({ todos })
     }
 
-    handleToggle(index) {
-        const todos = this.state.todos.map((todo, todoIndex) => {
-            if (index === todoIndex) {
+    handleToggle(id) {
+        const todos = this.state.todos.map(todo => {
+            if (id === todo.id) {
                 return {
                     ...todo,
-                    isCompleted: !todo.isComplete,
+                    isCompleted: !todo.isCompleted,
                 }
             }
             return todo
@@ -68,16 +67,16 @@ class Todos extends Component {
         this.setState({ todos })
     }
 
-    handleSetVisibility(visibility) {
-        this.setState({
-            visibility,
-        })
-    }
+    // handleSetVisibility(visibility) {
+    //     this.setState({
+    //         visibility,
+    //     })
+    // }
 
-    getTodos() {
-        const { visibility, todos } = this.state
-        return filter[visibility](todos)
-    }
+    // getTodos() {
+    //     const { visibility, todos } = this.state
+    //     return filter[visibility](todos)
+    // }
 
     render() {
         const { todos, text } = this.state
@@ -89,10 +88,10 @@ class Todos extends Component {
                     onAddTodo={this.handleAddTodo}
                 />
                 <Navigation
-                    todos={this.getTodos()}
+                    todos={todos}
                     onDeleteTodo={this.handleDelTodo}
                     onToggleTodo={this.handleToggle}
-                    onSetVisibility={this.handleSetVisibility}
+                    // onSetVisibility={this.handleSetVisibility}
                 />
             </View>
         )

@@ -9,6 +9,9 @@ import { Platform, StyleSheet, Text, View } from 'react-native'
 import Todos from './js/containers/Todos'
 import { TabBarIOS } from 'react-native'
 
+// stop remote debugger warning
+console.ignoredYellowBox = ['Remote debugger']
+
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
     android:
