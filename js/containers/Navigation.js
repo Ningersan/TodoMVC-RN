@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TabBarIOS, StyleSheet } from 'react-native'
 import TodoList from './TodoList'
-import { AllTodoList, ActiveTodoList, CompletedTodoList } from './TodoList'
+import filterToComponent from './FilteredTodoList'
 
 const tabs = [
     {
@@ -20,12 +20,6 @@ const tabs = [
         title: 'Completed',
     },
 ]
-
-const filterToComponent = {
-    all: AllTodoList,
-    active: ActiveTodoList,
-    completed: CompletedTodoList,
-}
 
 class Navigation extends Component {
     constructor(props) {

@@ -21,8 +21,3 @@ const TodoList = ({ todos, onToggleTodo, onDeleteTodo }) => (
 )
 
 export default TodoList
-
-// HOC component
-export const AllTodoList = withFilter(TodoItem, 'all')
-export const ActiveTodoList = withFilter(TodoItem, 'active')
-export const CompletedTodoList = withFilter(TodoList, 'completed')
