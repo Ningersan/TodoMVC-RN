@@ -10,12 +10,9 @@ class Todos extends Component {
         this.state = {
             text: '',
             todos: [
-                { id: guid(), text: '望不穿这暧昧的眼', isCompleted: false },
-                { id: guid(), text: '终须都归还 无谓多贪', isCompleted: false },
-                { id: guid(), text: '偏未晚', isCompleted: true },
-                { id: guid(), text: '望不穿这暧昧的眼', isCompleted: false },
-                { id: guid(), text: '终须都归还 无谓多贪', isCompleted: false },
-                { id: guid(), text: '偏未晚', isCompleted: true },
+                { id: guid(), text: 'Talk', isCompleted: false },
+                { id: guid(), text: 'Is', isCompleted: false },
+                { id: guid(), text: 'Less', isCompleted: true },
             ],
             visibility: 'all',
         }

@@ -39,20 +39,13 @@ class Navigation extends Component {
 
     renderTab(tab, index) {
         const { selectItem } = this.state
-        const { todos, onDeleteTodo, onToggleTodo } = this.props
         const FilteredTodo = filterToComponent[tab.key]
         return (
             <TabBarIOS.Item
-                key={tab.key}
-                title={tab.title}
-                icon={tab.icon}
+                {...tab}
                 selected={index === selectItem}
                 onPress={() => this.handleJumpTo(tab, index)}>
-                <FilteredTodo
-                    todos={todos}
-                    onDeleteTodo={onDeleteTodo}
-                    onToggleTodo={onToggleTodo}
-                />
+                <FilteredTodo {...this.props} />
             </TabBarIOS.Item>
         )
     }

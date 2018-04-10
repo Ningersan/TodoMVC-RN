@@ -15,7 +15,7 @@ const TodoList = ({ todos, onToggleTodo, onDeleteTodo }) => (
                     onDelete={() => onDeleteTodo(item.id)}
                 />
             )}
-            keyExtractor={(item, index) => index}
+            keyExtractor={item => item.id}
         />
     </ScrollView>
 )
